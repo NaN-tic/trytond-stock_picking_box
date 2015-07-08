@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<!-- This file is part stock_picking_box module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data>
+        <!-- Main Menus -->
+        <menuitem parent="stock.menu_configuration" name="Picking Boxes" id="menu_picking_box_conf"/>
+        <menuitem parent="stock.menu_stock" name="Picking Boxes" id="menu_picking_box"/>
+
+        <!-- stock.picking.box.out -->
+        <record model="ir.ui.view" id="stock_picking_box_out_tree_view">
+            <field name="model">stock.picking.box.out</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="30"/>
+            <field name="name">stock_picking_box_out_tree</field>
+        </record>
+        <record model="ir.ui.view" id="stock_picking_box_out_form_view">
+            <field name="model">stock.picking.box.out</field>
+            <field name="type">form</field>
+            <field name="priority" eval="30"/>
+            <field name="name">stock_picking_box_out_form</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_stock_picking_box_out">
+            <field name="name">Picking Boxes Out</field>
+            <field name="res_model">stock.picking.box.out</field>
+            <field name="domain"></field>
+            <field name="search_value"></field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_stock_picking_box_out_tree">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="stock_picking_box_out_tree_view"/>
+            <field name="act_window" ref="act_stock_picking_box_out"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_stock_picking_box_out_form">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="stock_picking_box_out_form_view"/>
+            <field name="act_window" ref="act_stock_picking_box_out"/>
+        </record>
+        <menuitem
+            id="menu_stock_picking_box_out"
+            name="Picking Box Out"
+            parent="menu_picking_box_conf"
+            action="act_stock_picking_box_out"/>
+
+        <record model="ir.model.access" id="access_stock_picking_box_out_stock_admin">
+            <field name="model" search="[('model', '=', 'stock.picking.box.out')]"/>
+            <field name="group" ref="stock.group_stock_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+        <record model="ir.model.access" id="access_stock_picking_box_out">
+            <field name="model" search="[('model', '=', 'stock.picking.box.out')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
+        <!-- stock Picking Box Shipment Out Wizard -->
+        <record model="ir.ui.view" id="shipment_out_start">
+            <field name="model">stock.picking.box.shipment.out.start</field>
+            <field name="type">form</field>
+            <field name="name">stock_picking_box_shipment_out_start</field>
+        </record>
+
+        <record model="ir.ui.view" id="shipment_out_result">
+            <field name="model">stock.picking.box.shipment.out.result</field>
+            <field name="type">form</field>
+            <field name="name">stock_picking_box_shipment_out_result</field>
+        </record>
+
+        <record model="ir.action.wizard" id="act_stock_picking_box_shipment_out">
+            <field name="name">Stock Picking Box Out</field>
+            <field name="wiz_name">stock.picking.box.shipment.out</field>
+        </record>
+        <menuitem
+            name="Picking Box Out" 
+            parent="menu_picking_box"
+            action="act_stock_picking_box_shipment_out"
+            id="menu_stock_picking_box_shipment_out"
+            sequence="10"/>
+
+        <!-- stock.picking.box.out.assign -->
+        <record model="ir.ui.view" id="stock_picking_box_out_assign_tree_view">
+            <field name="model">stock.picking.box.out.assign</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="30"/>
+            <field name="name">stock_picking_box_out_assign_tree</field>
+        </record>
+        <record model="ir.ui.view" id="stock_picking_box_out_assign_form_view">
+            <field name="model">stock.picking.box.out.assign</field>
+            <field name="type">form</field>
+            <field name="priority" eval="30"/>
+            <field name="name">stock_picking_box_out_assign_form</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_stock_picking_box_out_assign">
+            <field name="name">Picking Boxes Out Assign</field>
+            <field name="res_model">stock.picking.box.out.assign</field>
+            <field name="domain"></field>
+            <field name="search_value"></field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_stock_picking_box_out_assign_tree">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="stock_picking_box_out_assign_tree_view"/>
+            <field name="act_window" ref="act_stock_picking_box_out_assign"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_stock_picking_box_out_assign_form">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="stock_picking_box_out_assign_form_view"/>
+            <field name="act_window" ref="act_stock_picking_box_out_assign"/>
+        </record>
+        <menuitem
+            id="menu_stock_picking_box_out_assign"
+            name="Picking Box Out"
+            parent="menu_stock_picking_box_shipment_out"
+            action="act_stock_picking_box_out_assign"
+            sequence="20"/>
+
+        <record model="ir.action.act_window.domain" id="act_stock_picking_box_out_assign_waiting">
+            <field name="name">Waiting</field>
+            <field name="sequence" eval="10"/>
+            <field name="domain">[('state','=','waiting')]</field>
+            <field name="act_window" ref="act_stock_picking_box_out_assign"/>
+        </record>
+        <record model="ir.action.act_window.domain" id="act_stock_picking_box_out_assign_done">
+            <field name="name">Done</field>
+            <field name="sequence" eval="20"/>
+            <field name="domain">[('state','=','done')]</field>
+            <field name="act_window" ref="act_stock_picking_box_out_assign"/>
+        </record>
+        <record model="ir.action.act_window.domain" id="act_stock_picking_box_out_assign_all">
+            <field name="name">All</field>
+            <field name="sequence" eval="999"/>
+            <field name="domain"></field>
+            <field name="act_window" ref="act_stock_picking_box_out_assign"/>
+        </record>
+
+        <record model="ir.model.access" id="access_stock_picking_box_out_assign_stock_admin">
+            <field name="model" search="[('model', '=', 'stock.picking.box.out.assign')]"/>
+            <field name="group" ref="stock.group_stock"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+        <record model="ir.model.access" id="access_stock_picking_box_out_assign">
+            <field name="model" search="[('model', '=', 'stock.picking.box.out.assign')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+    </data>
+</tryton>

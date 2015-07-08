@@ -1,0 +1,238 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "error:stock.picking.box.shipment.out:"
+msgid ""
+"Shipment\"%(shipment)s\" could not assign any box. Please try again or wait "
+"to available new box."
+msgstr ""
+"L'albarà \"%(shipment)s\" no s'ha pogut assignar a cap box. Torni a provar-"
+"ho o esperi que estigui disponible un box."
+
+msgctxt "field:stock.picking.box.out,active:"
+msgid "Active"
+msgstr "Actiu"
+
+msgctxt "field:stock.picking.box.out,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:stock.picking.box.out,create_uid:"
+msgid "Create User"
+msgstr "Usuari creació"
+
+msgctxt "field:stock.picking.box.out,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:stock.picking.box.out,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:stock.picking.box.out,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:stock.picking.box.out,sequence:"
+msgid "Sequence"
+msgstr "Seqüència"
+
+msgctxt "field:stock.picking.box.out,warehouse:"
+msgid "Warehouse"
+msgstr "Magatzem"
+
+msgctxt "field:stock.picking.box.out,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:stock.picking.box.out,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:stock.picking.box.out.assign,box:"
+msgid "Box"
+msgstr "Box"
+
+msgctxt "field:stock.picking.box.out.assign,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:stock.picking.box.out.assign,create_uid:"
+msgid "Create User"
+msgstr "Usuari creació"
+
+msgctxt "field:stock.picking.box.out.assign,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:stock.picking.box.out.assign,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:stock.picking.box.out.assign,shipment:"
+msgid "Shipment"
+msgstr "Albarà client"
+
+msgctxt "field:stock.picking.box.out.assign,state:"
+msgid "State"
+msgstr "Estat"
+
+msgctxt "field:stock.picking.box.out.assign,user:"
+msgid "User"
+msgstr "Usuari"
+
+msgctxt "field:stock.picking.box.out.assign,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:stock.picking.box.out.assign,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:stock.picking.box.shipment.out.result,box:"
+msgid "Box"
+msgstr "Box"
+
+msgctxt "field:stock.picking.box.shipment.out.result,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:stock.picking.box.shipment.out.result,shipment:"
+msgid "Shipment"
+msgstr "Albarà client"
+
+msgctxt "field:stock.picking.box.shipment.out.start,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:stock.picking.box.shipment.out.start,shipment:"
+msgid "Shipment"
+msgstr "Albarà client"
+
+msgctxt "model:ir.action,name:act_stock_picking_box_out"
+msgid "Picking Boxes Out"
+msgstr "Boxes d'empaquetament sortida"
+
+msgctxt "model:ir.action,name:act_stock_picking_box_out_assign"
+msgid "Picking Boxes Out Assign"
+msgstr "Assignació box empaqueta sortida"
+
+msgctxt "model:ir.action,name:act_stock_picking_box_shipment_out"
+msgid "Stock Picking Box Out"
+msgstr "Box empaqueta sortida"
+
+msgctxt ""
+"model:ir.action.act_window.domain,name:act_stock_picking_box_out_assign_all"
+msgid "All"
+msgstr "Tots"
+
+msgctxt ""
+"model:ir.action.act_window.domain,name:act_stock_picking_box_out_assign_done"
+msgid "Done"
+msgstr "Finalitzat"
+
+msgctxt ""
+"model:ir.action.act_window.domain,name:act_stock_picking_box_out_assign_waiting"
+msgid "Waiting"
+msgstr "En espera"
+
+msgctxt "model:ir.ui.menu,name:menu_picking_box"
+msgid "Picking Boxes"
+msgstr "Boxes d'empaquetament"
+
+msgctxt "model:ir.ui.menu,name:menu_picking_box_conf"
+msgid "Picking Boxes"
+msgstr "Boxes d'empaquetament"
+
+msgctxt "model:ir.ui.menu,name:menu_stock_picking_box_out"
+msgid "Picking Box Out"
+msgstr "Box empaqueta sortida"
+
+msgctxt "model:ir.ui.menu,name:menu_stock_picking_box_out_assign"
+msgid "Picking Box Out"
+msgstr "Box empaqueta sortida"
+
+msgctxt "model:ir.ui.menu,name:menu_stock_picking_box_shipment_out"
+msgid "Picking Box Out"
+msgstr "Box empaqueta sortida"
+
+msgctxt "model:stock.picking.box.out,name:"
+msgid "Stock Picking Box Out"
+msgstr "Box empaqueta sortida"
+
+msgctxt "model:stock.picking.box.out.assign,name:"
+msgid "Stock Picking Box Out Assign"
+msgstr "Assignació box empaqueta sortida"
+
+msgctxt "model:stock.picking.box.shipment.out.result,name:"
+msgid "Shipment Picking Box Shipment Out Result"
+msgstr "Resultat box empaquetament albarà sortida"
+
+msgctxt "model:stock.picking.box.shipment.out.start,name:"
+msgid "Shipment Picking Box Shipment Out Start"
+msgstr "Inici box empaquetament albarà sortida"
+
+msgctxt "selection:stock.picking.box.out.assign,state:"
+msgid "Done"
+msgstr "Finalitzat"
+
+msgctxt "selection:stock.picking.box.out.assign,state:"
+msgid "Waiting"
+msgstr "En espera"
+
+msgctxt "view:stock.picking.box.out.assign:"
+msgid "Done"
+msgstr "Finalitzat"
+
+msgctxt "view:stock.picking.box.out.assign:"
+msgid "General"
+msgstr "General"
+
+msgctxt "view:stock.picking.box.out.assign:"
+msgid "Picking Box Out Assign"
+msgstr "Assigna box empaqueta sortida"
+
+msgctxt "view:stock.picking.box.out.assign:"
+msgid "Picking Boxes Out Assign"
+msgstr "Assigna box empaqueta sortida"
+
+msgctxt "view:stock.picking.box.out.assign:"
+msgid "Waiting"
+msgstr "En espera"
+
+msgctxt "view:stock.picking.box.out:"
+msgid "Picking Box Out"
+msgstr "Box empaqueta sortida"
+
+msgctxt "view:stock.picking.box.out:"
+msgid "Picking Boxes Out"
+msgstr "Boxes d'empaquetament sortida"
+
+msgctxt "view:stock.picking.box.shipment.out.result:"
+msgid "Picking Box Shipment Out Result"
+msgstr "Resultat box empaquetament sortida"
+
+msgctxt "view:stock.picking.box.shipment.out.result:"
+msgid "Successfully shipment assigned. Leave the shipment on the box"
+msgstr "S'ha assignat l'albarà. Deixi l'albarà en el box."
+
+msgctxt "view:stock.picking.box.shipment.out.start:"
+msgid "Picking Box Shipment Out Start"
+msgstr "Inici box empaquetament sortida"
+
+msgctxt "wizard_button:stock.picking.box.shipment.out,picking,assign:"
+msgid "Assign"
+msgstr "Reserva"
+
+msgctxt "wizard_button:stock.picking.box.shipment.out,picking,end:"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "wizard_button:stock.picking.box.shipment.out,result,end:"
+msgid "Done"
+msgstr "Finalitza"
+
+msgctxt "wizard_button:stock.picking.box.shipment.out,result,picking:"
+msgid "New Assign"
+msgstr "Nova assignació"

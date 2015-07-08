@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- This file is part stock_picking_box module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
+<form string="Picking Box Shipment Out Result">
+    <image name="tryton-dialog-information" xexpand="0" xfill="0"/>
+    <label string="Successfully shipment assigned. Leave the shipment on the box" id="assign"
+        yalign="0.0" xalign="0.0" xexpand="1"/>
+    <newline/>
+    <label name="shipment"/>
+    <field name="shipment"/>
+    <label name="box"/>
+    <field name="box"/>
+</form>

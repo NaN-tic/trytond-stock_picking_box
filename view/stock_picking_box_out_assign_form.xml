@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- This file is part of stock_picking_box module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license terms. -->
+<form string="Picking Box Out Assign">
+    <label name="shipment"/>
+    <field name="shipment"/>
+    <notebook colspan="6">
+        <page string="General" id="general" col="6">
+            <label name="box"/>
+            <field name="box"/>
+            <label name="user"/>
+            <field name="user"/>
+        </page>
+    </notebook>
+    <label name="state"/>
+    <field name="state"/>
+    <group col="4" colspan="3" id="buttons">
+        <button name="done" string="Done" icon="tryton-go-next"/>
+        <button name="waiting" string="Waiting" icon="tryton-clear"/>
+    </group>
+</form>

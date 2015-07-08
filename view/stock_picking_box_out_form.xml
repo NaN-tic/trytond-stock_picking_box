@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- This file is part of stock_picking_box module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license terms. -->
+<form string="Picking Box Out">
+    <label name="name"/>
+    <field name="name"/>
+    <label name="warehouse"/>
+    <field name="warehouse"/>
+    <label name="sequence"/>
+    <field name="sequence"/>
+    <label name="active"/>
+    <field name="active"/>
+</form>
