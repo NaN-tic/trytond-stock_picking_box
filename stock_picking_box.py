@@ -12,6 +12,8 @@ __all__ = ['StockPickingBoxOut', 'StockPickingBoxOutAssign',
     'StockPickingBoxShipmentOutStart', 'StockPickingBoxShipmentOutResult',
     'StockPickingBoxShipmentOut']
 
+logger = logging.getLogger(__name__)
+
 
 class StockPickingBoxOut(ModelSQL, ModelView):
     'Stock Picking Box Out'
@@ -114,7 +116,7 @@ class StockPickingBoxOutAssign(ModelSQL, ModelView):
             if attempts < total_attempts:
                 cls.assign(shipment, attempts+1, total_attempts)
             else:
-                logging.getLogger('Stock Picking Box').warning(
+                logger.warning(
                     'Table Shipment Box Out is lock after %s attempts' % (total_attempts))
                 return
         else:
