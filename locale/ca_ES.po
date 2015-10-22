@@ -1,14 +1,24 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "error:stock.picking.box.out.assign:"
+msgid ""
+"Shipment \"%(shipment)s\" can not assign in box \"%(box)s\" because there is"
+" another shipment assigned. Please select a new box."
+msgstr ""
+"L'albarà \"%(shipment)s\" no es pot assignar en el box \"%(box)s\" perque ja"
+" existeix un altre albarà ja assignat. Seleccione un nou box."
+
+msgctxt "error:stock.picking.box.out.assign:"
+msgid "Shipment \"%(shipment)s\" is available in box \"%(box)s\"."
+msgstr "L'albarà \"%(shipment)s\" ja es troba en el box \"%(box)s\"."
+
 msgctxt "error:stock.picking.box.shipment.out:"
 msgid ""
-"Shipment\"%(shipment)s\" could not assign any box. Please try again or wait "
-"to available new box."
-msgstr ""
-"L'albarà \"%(shipment)s\" no s'ha pogut assignar a cap box. Torni a provar-"
-"ho o esperi que estigui disponible un box."
+"Shipment \"%(shipment)s\" could not assign any box. Please try again or wait"
+" to available new box."
+msgstr "L'albarà \"%(shipment)s\" ja es troba en el box \"%(box)s\"."
 
 msgctxt "field:stock.picking.box.out,active:"
 msgid "Active"
@@ -26,6 +36,10 @@ msgctxt "field:stock.picking.box.out,id:"
 msgid "ID"
 msgstr "ID"
 
+msgctxt "field:stock.picking.box.out,location:"
+msgid "Location"
+msgstr "Ubicació"
+
 msgctxt "field:stock.picking.box.out,name:"
 msgid "Name"
 msgstr "Nom"
@@ -37,6 +51,10 @@ msgstr "Nom"
 msgctxt "field:stock.picking.box.out,sequence:"
 msgid "Sequence"
 msgstr "Seqüència"
+
+msgctxt "field:stock.picking.box.out,type:"
+msgid "Type"
+msgstr "Tipus"
 
 msgctxt "field:stock.picking.box.out,warehouse:"
 msgid "Warehouse"
@@ -102,6 +120,10 @@ msgctxt "field:stock.picking.box.shipment.out.result,shipment:"
 msgid "Shipment"
 msgstr "Albarà client"
 
+msgctxt "field:stock.picking.box.shipment.out.start,box:"
+msgid "Box"
+msgstr "Box"
+
 msgctxt "field:stock.picking.box.shipment.out.start,id:"
 msgid "ID"
 msgstr "ID"
@@ -112,15 +134,15 @@ msgstr "Albarà client"
 
 msgctxt "model:ir.action,name:act_stock_picking_box_out"
 msgid "Picking Boxes Out"
-msgstr "Boxes d'empaquetament sortida"
+msgstr "Boxes d'albarans de client"
 
 msgctxt "model:ir.action,name:act_stock_picking_box_out_assign"
 msgid "Picking Boxes Out Assign"
-msgstr "Assignació box empaqueta sortida"
+msgstr "Assigna box d'albarans de client"
 
 msgctxt "model:ir.action,name:act_stock_picking_box_shipment_out"
 msgid "Stock Picking Box Out"
-msgstr "Box empaqueta sortida"
+msgstr "Box albarans de client"
 
 msgctxt ""
 "model:ir.action.act_window.domain,name:act_stock_picking_box_out_assign_all"
@@ -147,35 +169,43 @@ msgstr "Boxes d'empaquetament"
 
 msgctxt "model:ir.ui.menu,name:menu_stock_picking_box_out"
 msgid "Picking Box Out"
-msgstr "Box empaqueta sortida"
+msgstr "Box albarans de client"
 
 msgctxt "model:ir.ui.menu,name:menu_stock_picking_box_out_assign"
 msgid "Picking Box Out"
-msgstr "Box empaqueta sortida"
+msgstr "Box albarans de client"
 
 msgctxt "model:ir.ui.menu,name:menu_stock_picking_box_shipment_out"
 msgid "Picking Box Out"
-msgstr "Box empaqueta sortida"
+msgstr "Box albarans de client"
 
 msgctxt "model:stock.picking.box.out,name:"
 msgid "Stock Picking Box Out"
-msgstr "Box empaqueta sortida"
+msgstr "Box albarans de client"
 
 msgctxt "model:stock.picking.box.out.assign,name:"
 msgid "Stock Picking Box Out Assign"
-msgstr "Assignació box empaqueta sortida"
+msgstr "Assignar box albarans de client"
 
 msgctxt "model:stock.picking.box.shipment.out.result,name:"
 msgid "Shipment Picking Box Shipment Out Result"
-msgstr "Resultat box empaquetament albarà sortida"
+msgstr "Resultat box albarà de client"
 
 msgctxt "model:stock.picking.box.shipment.out.start,name:"
 msgid "Shipment Picking Box Shipment Out Start"
-msgstr "Inici box empaquetament albarà sortida"
+msgstr "Assignació box albarà de client"
+
+msgctxt "selection:stock.picking.box.out,type:"
+msgid "Fixed"
+msgstr "Fix"
+
+msgctxt "selection:stock.picking.box.out,type:"
+msgid "Picking"
+msgstr "Empaquetament"
 
 msgctxt "selection:stock.picking.box.out.assign,state:"
 msgid "Done"
-msgstr "Finalitzat"
+msgstr "Finalitza"
 
 msgctxt "selection:stock.picking.box.out.assign,state:"
 msgid "Waiting"
@@ -191,11 +221,11 @@ msgstr "General"
 
 msgctxt "view:stock.picking.box.out.assign:"
 msgid "Picking Box Out Assign"
-msgstr "Assigna box empaqueta sortida"
+msgstr "Assigna box albarà de client"
 
 msgctxt "view:stock.picking.box.out.assign:"
 msgid "Picking Boxes Out Assign"
-msgstr "Assigna box empaqueta sortida"
+msgstr "Assignació box d'albarans de client"
 
 msgctxt "view:stock.picking.box.out.assign:"
 msgid "Waiting"
@@ -203,15 +233,15 @@ msgstr "En espera"
 
 msgctxt "view:stock.picking.box.out:"
 msgid "Picking Box Out"
-msgstr "Box empaqueta sortida"
+msgstr "Box albarans de client"
 
 msgctxt "view:stock.picking.box.out:"
 msgid "Picking Boxes Out"
-msgstr "Boxes d'empaquetament sortida"
+msgstr "Boxes d'albarans de client"
 
 msgctxt "view:stock.picking.box.shipment.out.result:"
 msgid "Picking Box Shipment Out Result"
-msgstr "Resultat box empaquetament sortida"
+msgstr "Resultat box albarà de client"
 
 msgctxt "view:stock.picking.box.shipment.out.result:"
 msgid "Successfully shipment assigned. Leave the shipment on the box"
@@ -219,7 +249,7 @@ msgstr "S'ha assignat l'albarà. Deixi l'albarà en el box."
 
 msgctxt "view:stock.picking.box.shipment.out.start:"
 msgid "Picking Box Shipment Out Start"
-msgstr "Inici box empaquetament sortida"
+msgstr "Assignació box albarà de client"
 
 msgctxt "wizard_button:stock.picking.box.shipment.out,picking,assign:"
 msgid "Assign"

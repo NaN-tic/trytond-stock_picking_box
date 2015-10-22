@@ -3,7 +3,7 @@
 #the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
 from trytond.wizard import Wizard, StateTransition, StateView, Button
-from trytond.pool import Pool, PoolMeta
+from trytond.pool import Pool
 from trytond.pyson import Eval, Equal, Not
 from trytond.transaction import Transaction
 import logging
@@ -21,8 +21,14 @@ class StockPickingBoxOut(ModelSQL, ModelView):
     name = fields.Char('Name', required=True)
     warehouse = fields.Many2One('stock.location', 'Warehouse',
         domain=[('type', '=', 'warehouse')], required=True)
+    location = fields.Many2One('stock.location', 'Location',
+        domain=[('type', '=', 'storage')])
     sequence = fields.Integer('Sequence')
     active = fields.Boolean('Active', select=True)
+    type = fields.Selection([
+        ('fixed', 'Fixed'),
+        ('picking', 'Picking'),
+        ], 'Type')
 
     @staticmethod
     def default_sequence():
@@ -31,6 +37,10 @@ class StockPickingBoxOut(ModelSQL, ModelView):
     @staticmethod
     def default_active():
         return True
+
+    @staticmethod
+    def default_type():
+        return 'fixed'
 
 
 class StockPickingBoxOutAssign(ModelSQL, ModelView):
@@ -56,6 +66,13 @@ class StockPickingBoxOutAssign(ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(StockPickingBoxOutAssign, cls).__setup__()
+        cls._error_messages.update({
+            'not_box_available': 'Shipment "%(shipment)s" can not assign '
+                'in box "%(box)s" because there is another shipment assigned. '
+                'Please select a new box.',
+            'not_reassign_shipment': 'Shipment "%(shipment)s" is available '
+                'in box "%(box)s".',
+            })
         cls._buttons.update({
             'done': {
                 'invisible': Eval('state') == 'done',
@@ -88,26 +105,58 @@ class StockPickingBoxOutAssign(ModelSQL, ModelView):
             })
 
     @classmethod
-    def assign(cls, shipment, attempts=0, total_attempts=5):
+    def assign(cls, shipment, box=None, attempts=0, total_attempts=5):
+        '''Assign a shipment in a box
+        1. Reassign a shipment to other box
+        2. Assign a shipment to new box
+        3. Assign a shipment to new box (search a free box)'''
         pool = Pool()
         StockPickingBoxOut = pool.get('stock.picking.box.out')
         User = pool.get('res.user')
 
+        # 1. Reassign a shipment to other box
+        assigned_boxes = cls.search([
+                ('shipment', '=', shipment),
+                ('state', '=', 'waiting'),
+                ])
+        if assigned_boxes:
+            assigned_box, = assigned_boxes
+            if box:
+                # assign shipment to new box
+                cls.write([assigned_box], {'box': box})
+                return box
+            cls.raise_user_error('not_reassign_shipment', {
+                'shipment': shipment.rec_name,
+                'box': assigned_box.box.rec_name,
+                })
+
+        # 2. Assign a shipment to new box
+        if box:
+            assigned = cls.search([
+                ('box', '=', box),
+                ('state', '=', 'waiting'),
+                ])
+            if assigned:
+                cls.raise_user_error('not_box_available', {
+                    'shipment': shipment.rec_name,
+                    'box': box.rec_name,
+                    })
+            # assign shipment to box
+            cls.create([{
+                'shipment': shipment,
+                'box': box,
+                }])
+            return box
+
+        # 3. Assign a shipment to new box (search a free box)
         transaction = Transaction()
         user = User(transaction.user)
 
         warehouse = None
+        locations = None
         if hasattr(user, 'stock_warehouse'):
             warehouse = user.stock_warehouse
-
-        # check if shipment is assigned in a waiting box
-        assigned = cls.search([
-            ('shipment', '=', shipment),
-            ('state', '=', 'waiting'),
-            ])
-        if assigned:
-            return
-
+            locations = user.stock_locations
         try:
             # Locks transaction. Nobody can query this table
             transaction.cursor.lock(cls._table)
@@ -124,13 +173,17 @@ class StockPickingBoxOutAssign(ModelSQL, ModelView):
             domain = [('state', '=', 'waiting')]
             if warehouse:
                 domain.append(('box.warehouse', '=', warehouse))
+            if locations:
+                domain.append(('box.location', 'in', locations))
             boxes_assigned = cls.search(domain)
 
-            domain = []
+            domain = [('type', '=', 'fixed')]
             if boxes_assigned:
                 domain.append(('id', 'not in', [b.box.id for b in boxes_assigned]))
             if warehouse:
                 domain.append(('warehouse', '=', warehouse))
+            if locations:
+                domain.append(('location', 'in', locations))
 
             boxes = StockPickingBoxOut.search(domain, limit=1)
             if not boxes:
@@ -149,6 +202,7 @@ class StockPickingBoxShipmentOutStart(ModelView):
     'Shipment Picking Box Shipment Out Start'
     __name__ = 'stock.picking.box.shipment.out.start'
     shipment = fields.Many2One('stock.shipment.out', 'Shipment', required=True)
+    box = fields.Many2One('stock.picking.box.out', 'Box')
 
 
 class StockPickingBoxShipmentOutResult(ModelView):
@@ -178,9 +232,9 @@ class StockPickingBoxShipmentOut(Wizard):
     def __setup__(cls):
         super(StockPickingBoxShipmentOut, cls).__setup__()
         cls._error_messages.update({
-            'not_box': 'Shipment"%(shipment)s" could not assign any box. '
+            'not_box': 'Shipment "%(shipment)s" could not assign any box. '
                 'Please try again or wait to available new box.',
-        })
+            })
 
     def transition_start(self):
         return 'picking'
@@ -190,15 +244,16 @@ class StockPickingBoxShipmentOut(Wizard):
         StockPickingBoxOutAssign = pool.get('stock.picking.box.out.assign')
 
         shipment = self.picking.shipment
+        box = self.picking.box
 
-        box = StockPickingBoxOutAssign.assign(shipment)
-        if not box:
+        box_assigned = StockPickingBoxOutAssign.assign(shipment, box)
+        if not box_assigned:
             self.raise_user_error('not_box', {
                 'shipment': shipment.rec_name,
                 })
 
         self.result.shipment = shipment
-        self.result.box = box
+        self.result.box = box_assigned
         return 'result'
 
     def default_result(self, fields):

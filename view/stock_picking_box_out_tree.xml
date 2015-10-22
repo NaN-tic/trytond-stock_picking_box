@@ -5,6 +5,8 @@ copyright notices and license terms. -->
 <tree string="Picking Boxes Out">
     <field name="name"/>
     <field name="warehouse"/>
+    <field name="location"/>
+    <field name="type"/>
     <field name="sequence"/>
     <field name="active"/>
 </tree>

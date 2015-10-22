@@ -7,4 +7,6 @@ copyright notices and license terms. -->
     <field name="box"/>
     <field name="user"/>
     <field name="state"/>
+    <button name="done" string="Done" tree_invisible="1"/>
+    <button name="waiting" string="Waiting" tree_invisible="1"/>
 </tree>
