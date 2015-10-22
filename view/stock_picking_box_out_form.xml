@@ -7,6 +7,10 @@ copyright notices and license terms. -->
     <field name="name"/>
     <label name="warehouse"/>
     <field name="warehouse"/>
+    <label name="location"/>
+    <field name="location"/>
+    <label name="type"/>
+    <field name="type"/>
     <label name="sequence"/>
     <field name="sequence"/>
     <label name="active"/>
