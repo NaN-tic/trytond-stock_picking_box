@@ -103,14 +103,34 @@ class StockPickingBoxOutAssign(ModelSQL, ModelView):
             })
 
     @classmethod
+    def find_boxes(cls, warehouse, locations):
+        StockPickingBoxOut = Pool().get('stock.picking.box.out')
+
+        domain = [('state', '=', 'waiting')]
+        if warehouse:
+            domain.append(('box.warehouse', '=', warehouse))
+        if locations:
+            domain.append(('box.location', 'in', locations))
+        boxes_assigned = cls.search(domain)
+
+        domain = [('type', '=', 'fixed')]
+        if boxes_assigned:
+            domain.append(('id', 'not in', [b.box.id for b in boxes_assigned]))
+        if warehouse:
+            domain.append(('warehouse', '=', warehouse))
+        if locations:
+            domain.append(('location', 'in', locations))
+
+        boxes = StockPickingBoxOut.search(domain)
+        return boxes
+
+    @classmethod
     def assign(cls, shipment, box=None, attempts=0, total_attempts=5):
         '''Assign a shipment in a box
         1. Reassign a shipment to other box
         2. Assign a shipment to new box
         3. Assign a shipment to new box (search a free box)'''
-        pool = Pool()
-        StockPickingBoxOut = pool.get('stock.picking.box.out')
-        User = pool.get('res.user')
+        User = Pool().get('res.user')
 
         # 1. Reassign a shipment to other box
         assigned_boxes = cls.search([
@@ -168,25 +188,10 @@ class StockPickingBoxOutAssign(ModelSQL, ModelView):
                 return
         else:
             # find boxes are available to assign
-            domain = [('state', '=', 'waiting')]
-            if warehouse:
-                domain.append(('box.warehouse', '=', warehouse))
-            if locations:
-                domain.append(('box.location', 'in', locations))
-            boxes_assigned = cls.search(domain)
-
-            domain = [('type', '=', 'fixed')]
-            if boxes_assigned:
-                domain.append(('id', 'not in', [b.box.id for b in boxes_assigned]))
-            if warehouse:
-                domain.append(('warehouse', '=', warehouse))
-            if locations:
-                domain.append(('location', 'in', locations))
-
-            boxes = StockPickingBoxOut.search(domain, limit=1)
+            boxes = cls.find_boxes(warehouse, locations)
             if not boxes:
                 return
-            box, = boxes
+            box = boxes[0]
 
             # assign shipment to box
             cls.create([{
@@ -194,6 +199,55 @@ class StockPickingBoxOutAssign(ModelSQL, ModelView):
                 'box': box,
                 }])
             return box
+
+    @classmethod
+    def assigns(cls, shipments, attempts=0, total_attempts=5):
+        '''Assign a shipments in a box'''
+        User = Pool().get('res.user')
+
+        # Assign a shipment to new box (search a free box)
+        transaction = Transaction()
+        user = User(transaction.user)
+
+        warehouse = None
+        locations = None
+        if hasattr(user, 'stock_warehouse'):
+            warehouse = user.stock_warehouse
+            locations = user.stock_locations
+        try:
+            # Locks transaction. Nobody can query this table
+            transaction.cursor.lock(cls._table)
+        except:
+            # Table is locked. Captures operational error and returns void list
+            if attempts < total_attempts:
+                cls.assigns(shipments, attempts+1, total_attempts)
+            else:
+                logging.getLogger('Stock Picking Box').warning(
+                    'Table Shipment Box Out is lock after %s attempts' % (total_attempts))
+                return
+        else:
+            # find boxes are available to assign
+            boxes = cls.find_boxes(warehouse, locations)
+            if not boxes:
+                return
+
+            to_create = []
+            not_boxes = []
+            for shipment in shipments:
+                if not boxes:
+                    not_boxes.append(shipment)
+                    continue
+                box = boxes[0]
+                boxes.remove(boxes[0])
+                to_create.append({
+                    'shipment': shipment,
+                    'box': box,
+                    })
+
+            if to_create:
+                cls.create(to_create)
+
+            return to_create, not_boxes
 
 
 class StockPickingBoxShipmentOutStart(ModelView):
